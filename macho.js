@@ -27,7 +27,8 @@ let bgmcount_up=0;
 let timer = null;
 let setcount=0;
 let fifycount=0;
-let wait=3;
+let wait=1;
+let timecount=0;
 
 const bgm=new Array(bgm0,bgm1,bgm2,bgm3,bgm4,bgm5,bgm6,bgm7,bgm8,bgm9);
 
@@ -54,17 +55,17 @@ function voicecount_fifty(){
         downcount=0;
            timer=0;
            repcount=0;
-           wait++;
            console.log(wait);
            bgmcount_up=0;
            bgmcount_down=0;
+           timecount++;
            countdown();
         voicecount_up();
         });
      
      　//idをclearTimeoutで指定している
       
-    }else if(timer==1&&wait>=7){
+    }else if(timer==1&&timecount>=10){
         clearTimeout(fiftybgm);
     timer=0;
     bgmcount_up=0;
@@ -81,7 +82,7 @@ function voicecount_fifty(){
 }if(timer==1&&fifycount<10){
     bgm[fifycount].play();
     fifycount=fifycount+1;
-    log.innerHTML=`残り${7-wait}回:${fifycount}秒経過`;
+    log.innerHTML=`残り${10-timecount}回:${fifycount}秒経過`;
 }
 }
 
@@ -114,7 +115,7 @@ function countdown(){
     console.log(`上げるカウント${downcount++}`);
     
     
-    if(downcount > 2){　
+    if(downcount > 1){　
       clearTimeout(downid);　//idをclearTimeoutで指定している
       repcount++;
       console.log(`行なった回数${repcount}`);
@@ -144,7 +145,7 @@ function countup(){
     downcount=-1;
     let id = setTimeout(countup, 1000);
     console.log(`下げるカウント${count++}`);
-    if(count > 2){　
+    if(count > 1){　
       clearTimeout(id);　//idをclearTimeoutで指定している
       const up_promice=new Promise((resolve,)=>{
        // bgmdown.play();
@@ -179,7 +180,7 @@ function voicecount_down(){
     bgmcount_up=0;
     console.log(bgmcount_down);
     fifity_wait();
-    if(bgmcount_down > 1){　
+    if(bgmcount_down > 0){　
         const up_promice=new Promise((resolve,)=>{
             clearTimeout(downbgm);
              bgmdown.play();
@@ -196,7 +197,7 @@ function voicecount_down(){
       
     }else if(timer==1||timer==2){
         clearTimeout(downbgm);
-}if(timer==0&&bgmcount_down<=1){
+}if(timer==0&&bgmcount_down<=0){
     bgm[bgmcount_down].play();
     bgmcount_down=bgmcount_down+1;
     }
@@ -214,7 +215,7 @@ function voicecount_up(){
     let upbgm = setTimeout(voicecount_up, 1000);
     
     console.log(bgmcount_up);
-    if(bgmcount_up > 1){　
+    if(bgmcount_up > 0){　
         const down_promice=new Promise((resolve,)=>{
             bgmup.play();
             clearTimeout(upbgm);
@@ -231,7 +232,7 @@ function voicecount_up(){
       
     }else if(timer==1||timer==2){
         clearTimeout(upbgm);
-}if(timer==0&&bgmcount_up<=1){
+}if(timer==0&&bgmcount_up<=0){
     bgm[bgmcount_up].play();
     bgmcount_up=bgmcount_up+1;
 }
